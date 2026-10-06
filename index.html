@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berlin Trip Map — 15–20 October</title>
+<style>
+/* required styles */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-pane,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	-webkit-user-drag: none;
+	}
+.leaflet-tile::selection {
+	background: transparent;
+	}
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+.leaflet-container .leaflet-overlay-pane svg,
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	}
+
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	touch-action: none;
+	touch-action: pinch-zoom;
+	}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+	}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+	}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+	}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	z-index: 800;
+	}
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+.leaflet-pane         { z-index: 400; }
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted;
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	-moz-transition: opacity 0.2s linear;
+	transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	-ms-transform-origin: 0 0;
+	transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+	}
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	-moz-transition: -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	transition: transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+	}
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor: -moz-grab;
+	cursor: grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor: -moz-grabbing;
+	cursor: grabbing;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted;
+	pointer-events: auto;
+	}
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+.leaflet-default-icon-path {
+	background-image: url(images/marker-icon.png);
+	}
+.leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	font-size: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+	pointer-events: auto;
+
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-clickable {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+	}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+	}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+	}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+	}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1a17;
+    --paper: #f3efe6;
+    --paper-raised: #ffffff;
+    --rule: #d8d0c0;
+    --sub: #6b6357;
+
+    --attraction: #16324a;
+    --dining: #7a4a17;
+    --show: #5c1f33;
+    --exhibition: #3b4a2f;
+    --sport: #a1481c;
+    --wellness: #1f5c56;
+    --tour: #6b5a1f;
+    --boat: #2a6f8f;
+    --hotel: #4a4a4a;
+    --travel: #7a7a7a;
+    --badweather: #46545c;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+    flex-shrink: 0;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin: 0 0 10px;
+  }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tab {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    background: var(--paper-raised);
+    color: var(--sub);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .tab:hover { border-color: var(--ink); }
+  .tab.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    padding: 10px 20px 12px;
+    font-size: 0.76rem;
+    color: var(--sub);
+    border-bottom: 1px solid var(--rule);
+    flex-shrink: 0;
+  }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+  #map {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .leaflet-popup-content-wrapper {
+    border-radius: 6px;
+  }
+  .popup-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+  }
+  .popup-note {
+    font-size: 0.82rem;
+    color: var(--sub);
+  }
+
+  .map-label {
+    background: rgba(255,255,255,0.88);
+    border: none;
+    box-shadow: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.78rem;
+    color: var(--ink);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+  .map-label::before { display: none; }
+
+  .locate-btn { display: flex !important; align-items: center; justify-content: center; }
+  .locate-btn.active { background: #2a6fdb !important; color: #fff !important; }
+  .loc-toast {
+    display: none;
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    max-width: min(90vw, 420px);
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(28,26,23,0.92);
+    color: #fff;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    z-index: 2000;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Berlin, 15–20 October</h1>
+  <div class="tabs" id="tabs"></div>
+</header>
+
+<div class="legend">
+  <span class="legend-item"><span class="legend-dot" style="background:var(--hotel)"></span>Hotel</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--tour)"></span>Guided Tour / Masterclass</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--attraction)"></span>Attraction</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--dining)"></span>Dining</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--show)"></span>Show / Music</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--exhibition)"></span>Exhibition</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--sport)"></span>Sport</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--wellness)"></span>Wellness</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--travel)"></span>Travel</span>
+  <span class="legend-item"><svg viewBox="0 0 24 24" width="12" height="12"><path d="M12 2.5l2.9 6.4 7 .6-5.3 4.6 1.6 6.9L12 17.2 5.8 21l1.6-6.9-5.3-4.6 7-.6z" fill="#d4a017" stroke="#ffffff" stroke-width="1"/></svg>Area to Explore</span>
+  <span class="legend-item">🌧️ Bad Weather Option</span>
+  <span class="legend-item">🍽️ Lunch Option</span>
+</div>
+
+<div id="map"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+  const HOTEL = { name: "Hotel Adlon Kempinski", short: "Adlon", lat: 52.5160742, lng: 13.3804269 };
+
+  const DAY_COLORS = {
+    1: "#c9a15a",
+    2: "#6f9bb0",
+    3: "#b06a4a",
+    4: "#8a76a0",
+    5: "#6f9b6a",
+    6: "#8a8a8a"
+  };
+
+  const DAYS = [
+    {
+      id: 1, label: "Thu 15",
+      items: [
+        { name: "Brandenburg Gate", short: "Brandenburg Gate", lat: 52.5162746, lng: 13.377704, cat: "tour", note: "Guided tour starts 1:00 PM" },
+        { name: "Reichstag Building (exterior)", short: "Reichstag", lat: 52.5186202, lng: 13.3761871, cat: "tour" },
+        { name: "Memorial to the Murdered Jews of Europe", short: "Holocaust Memorial", lat: 52.5139474, lng: 13.3787126, cat: "tour" },
+        { name: "Führerbunker site", short: "Führerbunker", lat: 52.5124772, lng: 13.3809378, cat: "tour", note: "Now a parking lot with an info panel" },
+        { name: "Detlev-Rohwedder-Haus", short: "Rohwedder-Haus", lat: 52.5090932, lng: 13.3843031, cat: "tour", note: "Former Aviation Ministry" },
+        { name: "Berlin Wall Memorial, Bernauer Straße", short: "Wall Memorial", lat: 52.5350521, lng: 13.3901898, cat: "tour" },
+        { name: "Checkpoint Charlie", short: "Checkpoint Charlie", lat: 52.5074434, lng: 13.3903913, cat: "tour" },
+        { name: "Restaurant Quarre", short: "Quarre", lat: 52.5160742, lng: 13.3804269, cat: "dining", note: "Dinner, 5:30 PM" },
+        { name: "Philharmonie Berlin", short: "Philharmonie", lat: 52.5100319, lng: 13.369693, cat: "show", note: "Vivaldi's Four Seasons — booked, 8:00 PM" }
+      ]
+    },
+    {
+      id: 2, label: "Fri 16",
+      items: [
+        { name: "Reichstag — Dome & Plenary Chamber", short: "Reichstag", lat: 52.5186202, lng: 13.3761871, cat: "tour", note: "Guided tour, 9:30 AM" },
+        { name: "Neues Museum", short: "Neues Museum", lat: 52.5201349, lng: 13.3976462, cat: "exhibition" },
+        { name: "Alte Nationalgalerie", short: "Alte Nationalgalerie", lat: 52.5208104, lng: 13.3983529, cat: "exhibition" },
+        { name: "Berlin TV Tower", short: "TV Tower", lat: 52.520815, lng: 13.409419, cat: "attraction" },
+        { name: "Liquidrom", short: "Liquidrom", lat: 52.5015803, lng: 13.3811599, cat: "wellness", note: "Underwater Dream, 4:00–6:00 PM" },
+        { name: "Cookies Cream", short: "Cookies Cream", lat: 52.5157102, lng: 13.3877054, cat: "dining", note: "Dinner, booked 8:15 PM" }
+      ]
+    },
+    {
+      id: 3, label: "Sat 17",
+      items: [
+        { name: "East Side Gallery", short: "East Side Gallery", lat: 52.5050224, lng: 13.4396953, cat: "attraction" },
+        { name: "Markthalle Neun", short: "Markthalle Neun", lat: 52.502135, lng: 13.4315988, cat: "dining", note: "Lunch" },
+        { name: "Stadion An der Alten Försterei", short: "Union Stadium", lat: 52.4573946, lng: 13.5681354, cat: "sport", note: "Union Berlin vs. Dortmund, kickoff 3:30 PM" },
+        { name: "Nobelhart & Schmutzig", short: "Nobelhart & Schmutzig", lat: 52.5053369, lng: 13.3904178, cat: "dining", note: "Dinner, booked 8:00 PM" }
+      ]
+    },
+    {
+      id: 4, label: "Sun 18",
+      items: [
+        { name: "Charlottenburg Palace", short: "Charlottenburg", lat: 52.5209319, lng: 13.2956165, cat: "attraction" },
+        { name: "Victory Column, Tiergarten", short: "Victory Column", lat: 52.5145229, lng: 13.3501085, cat: "attraction" },
+        { name: "Gemäldegalerie", short: "Gemäldegalerie", lat: 52.5084982, lng: 13.3651754, cat: "exhibition" },
+        { name: "Neue Nationalgalerie", short: "Neue Nationalgalerie", lat: 52.5069946, lng: 13.367604, cat: "exhibition" },
+        { name: "Theater am Potsdamer Platz", short: "ALIZÉ Theater", lat: 52.5072717, lng: 13.3722375, cat: "show", note: "ALIZÉ — booked, 5:00 PM" },
+        { name: "Dinner near Potsdamer Platz", short: "Dinner (casual)", lat: 52.5096, lng: 13.3759, cat: "dining", note: "7:45 PM, after ALIZÉ — casual spot, fine dining closed Sundays" }
+      ]
+    },
+    {
+      id: 5, label: "Mon 19",
+      items: [
+        { name: "studio32 Berlin — Masterclass", short: "studio32", lat: 52.4945096, lng: 13.3537009, cat: "tour", note: "Modern German Cuisine masterclass, 9:30 AM" },
+        { name: "C/O Berlin", short: "C/O Berlin", lat: 52.5066337, lng: 13.330547, cat: "exhibition" },
+        { name: "Clärchens Ballhaus", short: "Clärchens", lat: 52.5267016, lng: 13.3968996, cat: "dining", note: "Dinner, 6:30 PM" },
+        { name: "A-Trane Jazz Club", short: "A-Trane", lat: 52.5072727, lng: 13.3199699, cat: "show", note: "Free entry Monday nights, no booking needed" }
+      ]
+    },
+    {
+      id: 6, label: "Tue 20",
+      items: []
+    }
+  ];
+
+  const AREAS = [
+    { name: "Historic Mitte Core", short: "Mitte Core", lat: 52.5150, lng: 13.3830, day: 1, note: "Areas to Explore — best mornings before 10, or evenings through Oct 18" },
+    { name: "Prenzlauer Berg & Mauerpark", short: "Mauerpark", lat: 52.5424, lng: 13.4013, day: 1, note: "Areas to Explore — best Sunday afternoon, but close enough to note here too" },
+    { name: "Scheunenviertel & Auguststraße", short: "Scheunenviertel", lat: 52.5267, lng: 13.3969, day: 2, note: "Areas to Explore — best Tue–Sat afternoon" },
+    { name: "Kreuzberg (Bergmannkiez)", short: "Kreuzberg", lat: 52.4890, lng: 13.3925, day: 3, note: "Areas to Explore — best Thu evening or Sat daytime" },
+    { name: "Charlottenburg & Ku'damm", short: "Ku'damm", lat: 52.5045, lng: 13.3260, day: 4, note: "Areas to Explore — best right after the Palace" },
+    { name: "Potsdamer Platz area", short: "Potsdamer Platz", lat: 52.5096, lng: 13.3759, day: 4, note: "Areas to Explore — best late afternoon" }
+  ];
+
+  const RAINY = [
+    { name: "Deutsches Historisches Museum", short: "DHM (rainy)", lat: 52.5177, lng: 13.3971, day: 1, note: "Bad weather option" },
+    { name: "Mall of Berlin", short: "Mall of Berlin (rainy)", lat: 52.5098, lng: 13.3796, day: 1, note: "Bad weather option" },
+    { name: "DDR Museum", short: "DDR Museum (rainy)", lat: 52.5192, lng: 13.4025, day: 2, note: "Bad weather option" },
+    { name: "Sony Center", short: "Sony Center (rainy)", lat: 52.5096, lng: 13.3759, day: 4, note: "Bad weather option" },
+    { name: "KaDeWe", short: "KaDeWe (rainy)", lat: 52.5019, lng: 13.3389, day: 4, note: "Bad weather option" },
+    { name: "Café Einstein Stammhaus", short: "Café Einstein (rainy)", lat: 52.5064, lng: 13.3505, day: 4, note: "Bad weather option" }
+  ];
+
+  const LUNCH = [
+    { name: "Ishin", short: "Ishin", lat: 52.5180204, lng: 13.3866199, day: 1, note: "Lunch option" },
+    { name: "1687 Restaurant & Café", short: "1687", lat: 52.51813, lng: 13.3842557, day: 1, note: "Lunch option" },
+    { name: "Flamingo Fresh Food Bar", short: "Flamingo", lat: 52.5195664, lng: 13.3855463, day: 1, note: "Lunch option" },
+    { name: "Café am Neuen See", short: "Café am Neuen See", lat: 52.5103772, lng: 13.3444862, day: 1, note: "Lunch option" },
+
+    { name: "Zum Nußbaum", short: "Zum Nußbaum", lat: 52.5171608, lng: 13.4071618, day: 2, note: "Lunch option" },
+    { name: "Georgbräu", short: "Georgbräu", lat: 52.5165548, lng: 13.4055038, day: 2, note: "Lunch option" },
+    { name: "Reinhard's", short: "Reinhard's", lat: 52.5173178, lng: 13.4058675, day: 2, note: "Lunch option" },
+    { name: "Mutter Hoppe", short: "Mutter Hoppe", lat: 52.5177056, lng: 13.4062088, day: 2, note: "Lunch option" },
+
+    { name: "Burgermeister", short: "Burgermeister", lat: 52.501092, lng: 13.4424249, day: 3, note: "Lunch option" },
+    { name: "Curry 36", short: "Curry 36", lat: 52.4934716, lng: 13.3876497, day: 3, note: "Lunch option" },
+    { name: "Mustafa's Gemüse Kebap", short: "Mustafa's", lat: 52.493485, lng: 13.3885619, day: 3, note: "Lunch option" },
+
+    { name: "NENI Berlin", short: "NENI", lat: 52.50572, lng: 13.33776, day: 4, note: "Lunch option" },
+    { name: "Schildkröte", short: "Schildkröte", lat: 52.5018905, lng: 13.3253887, day: 4, note: "Lunch option" },
+    { name: "Paris Bar", short: "Paris Bar", lat: 52.5054309, lng: 13.326345, day: 4, note: "Lunch option" },
+    { name: "Marjellchen", short: "Marjellchen", lat: 52.5031687, lng: 13.3177558, day: 4, note: "Lunch option" },
+
+    { name: "12 Apostel", short: "12 Apostel", lat: 52.5052643, lng: 13.3206953, day: 5, note: "Lunch option" },
+    { name: "Diener Tattersall", short: "Diener Tattersall", lat: 52.5046721, lng: 13.3236397, day: 5, note: "Lunch option" }
+  ];
+
+  const map = L.map('map', { zoomControl: true }).setView([HOTEL.lat, HOTEL.lng], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  let markerLayer = L.layerGroup().addTo(map);
+
+  function colorFor(cat) {
+    return getComputedStyle(document.documentElement).getPropertyValue('--' + cat).trim() || '#555';
+  }
+
+  const starIcon = L.divIcon({
+    className: 'star-icon',
+    html: '<svg viewBox="0 0 24 24" width="40.5" height="40.5"><path d="M12 2.5l2.9 6.4 7 .6-5.3 4.6 1.6 6.9L12 17.2 5.8 21l1.6-6.9-5.3-4.6 7-.6z" fill="#d4a017" stroke="#ffffff" stroke-width="1.3" stroke-linejoin="round"/></svg>',
+    iconSize: [40.5, 40.5],
+    iconAnchor: [20.25, 20.25]
+  });
+
+  function makeAreaMarker(area) {
+    const marker = L.marker([area.lat, area.lng], { icon: starIcon });
+    marker.bindTooltip(area.short, { permanent: true, direction: 'right', offset: [21, 0], className: 'map-label' });
+    marker.bindPopup('<div class="popup-name">' + area.name + '</div><div class="popup-note">' + area.note + '</div>');
+    return marker;
+  }
+
+  const rainIcon = L.divIcon({
+    className: 'rain-icon',
+    html: '<div style="font-size:40.5px; line-height:1;">🌧️</div>',
+    iconSize: [40.5, 40.5],
+    iconAnchor: [20.25, 20.25]
+  });
+
+  function makeRainyMarker(item) {
+    const marker = L.marker([item.lat, item.lng], { icon: rainIcon });
+    marker.bindTooltip(item.short, { permanent: true, direction: 'left', offset: [-21, 0], className: 'map-label' });
+    marker.bindPopup('<div class="popup-name">' + item.name + '</div><div class="popup-note">' + item.note + '</div>');
+    return marker;
+  }
+
+  const lunchIcon = L.divIcon({
+    className: 'lunch-icon',
+    html: '<svg viewBox="0 0 24 24" width="34" height="34">' +
+      '<circle cx="12" cy="12" r="6" fill="#ffffff" stroke="#2b1a0f" stroke-width="1.2"/>' +
+      '<g fill="#2b1a0f">' +
+      '<rect x="1.8" y="2" width="0.8" height="6"/>' +
+      '<rect x="3" y="2" width="0.8" height="6"/>' +
+      '<rect x="4.2" y="2" width="0.8" height="6"/>' +
+      '<rect x="1.8" y="7.9" width="3.2" height="0.9"/>' +
+      '<rect x="3" y="8.7" width="0.8" height="13.3"/>' +
+      '<path d="M21.4 2c-1.1 0-1.8 2.2-1.8 5 0 2.2 0.6 3.6 1.4 4V22h0.8V2z"/>' +
+      '</g>' +
+      '</svg>',
+    iconSize: [34, 34],
+    iconAnchor: [17, 17]
+  });
+
+  function makeLunchMarker(item) {
+    const marker = L.marker([item.lat, item.lng], { icon: lunchIcon });
+    marker.bindTooltip(item.short, { permanent: true, direction: 'right', offset: [18, 0], className: 'map-label' });
+    marker.bindPopup('<div class="popup-name">' + item.name + '</div><div class="popup-note">' + item.note + '</div>');
+    return marker;
+  }
+
+  function makeMarker(item, isHotel) {
+    const color = isHotel ? colorFor('hotel') : colorFor(item.cat);
+    const marker = L.circleMarker([item.lat, item.lng], {
+      radius: isHotel ? 8 : 9,
+      color: '#ffffff',
+      weight: 2,
+      fillColor: color,
+      fillOpacity: 0.95
+    });
+    marker.bindTooltip(item.short || item.name, {
+      permanent: true,
+      direction: 'right',
+      offset: [8, 0],
+      className: 'map-label'
+    });
+    const html = '<div class="popup-name">' + item.name + '</div>' +
+      (item.note ? '<div class="popup-note">' + item.note + '</div>' : '');
+    marker.bindPopup(html);
+    return marker;
+  }
+
+  // Andrew's monotone chain convex hull. Points as [lng, lat] (treated as plain x/y for a small local area).
+  function convexHull(points) {
+    const pts = points.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (pts.length < 3) return pts;
+    const cross = (o, a, b) => (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0]);
+    const lower = [];
+    for (const p of pts) {
+      while (lower.length >= 2 && cross(lower[lower.length-2], lower[lower.length-1], p) <= 0) lower.pop();
+      lower.push(p);
+    }
+    const upper = [];
+    for (let i = pts.length - 1; i >= 0; i--) {
+      const p = pts[i];
+      while (upper.length >= 2 && cross(upper[upper.length-2], upper[upper.length-1], p) <= 0) upper.pop();
+      upper.push(p);
+    }
+    upper.pop(); lower.pop();
+    return lower.concat(upper);
+  }
+
+  function showDay(dayId) {
+    markerLayer.clearLayers();
+    const day = DAYS.find(d => d.id === dayId);
+    if (!day) return;
+
+    const bounds = [];
+    const hullPoints = [];
+
+    bounds.push([HOTEL.lat, HOTEL.lng]);
+    hullPoints.push([HOTEL.lng, HOTEL.lat]);
+
+    day.items.forEach(item => {
+      bounds.push([item.lat, item.lng]);
+      hullPoints.push([item.lng, item.lat]);
+    });
+
+    // Day-colored polygon first, so markers/labels sit on top of it.
+    if (hullPoints.length >= 3) {
+      const hull = convexHull(hullPoints);
+      if (hull.length >= 3) {
+        const latlngs = hull.map(p => [p[1], p[0]]);
+        L.polygon(latlngs, {
+          color: DAY_COLORS[dayId],
+          weight: 1.5,
+          fillColor: DAY_COLORS[dayId],
+          fillOpacity: 0.12,
+          dashArray: '4 4'
+        }).addTo(markerLayer);
+      }
+    }
+
+    markerLayer.addLayer(makeMarker(HOTEL, true));
+    day.items.forEach(item => markerLayer.addLayer(makeMarker(item, false)));
+
+    AREAS.filter(a => a.day === dayId).forEach(area => {
+      markerLayer.addLayer(makeAreaMarker(area));
+      bounds.push([area.lat, area.lng]);
+    });
+
+    RAINY.filter(r => r.day === dayId).forEach(item => {
+      markerLayer.addLayer(makeRainyMarker(item));
+      bounds.push([item.lat, item.lng]);
+    });
+
+    LUNCH.filter(l => l.day === dayId).forEach(item => {
+      markerLayer.addLayer(makeLunchMarker(item));
+      bounds.push([item.lat, item.lng]);
+    });
+
+    if (bounds.length > 1) {
+      map.fitBounds(bounds, { padding: [50, 50] });
+    } else {
+      map.setView(bounds[0], 13);
+    }
+
+    document.querySelectorAll('.tab').forEach(t => {
+      t.classList.toggle('active', parseInt(t.dataset.day) === dayId);
+    });
+  }
+
+  const tabsEl = document.getElementById('tabs');
+  DAYS.forEach(day => {
+    const btn = document.createElement('div');
+    btn.className = 'tab';
+    btn.textContent = day.label;
+    btn.dataset.day = day.id;
+    btn.addEventListener('click', () => showDay(day.id));
+    tabsEl.appendChild(btn);
+  });
+
+  // ---- My location (needs https, e.g. GitHub Pages; does not work from a saved file) ----
+  const locLayer = L.layerGroup().addTo(map);
+  let locWatch = null, locFirstFix = true;
+  const toastEl = document.createElement('div');
+  toastEl.className = 'loc-toast';
+  document.body.appendChild(toastEl);
+  let toastTimer = null;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.style.display = 'block';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toastEl.style.display = 'none'; }, 5000);
+  }
+
+  function stopLocating(btn) {
+    if (locWatch !== null) navigator.geolocation.clearWatch(locWatch);
+    locWatch = null;
+    locLayer.clearLayers();
+    btn.classList.remove('active');
+  }
+
+  function startLocating(btn) {
+    if (!('geolocation' in navigator)) { toast('This browser does not support location.'); return; }
+    if (!window.isSecureContext) {
+      toast('Location only works when the map is opened from an https link (for example GitHub Pages), not from a saved file.');
+      return;
+    }
+    locFirstFix = true;
+    btn.classList.add('active');
+    locWatch = navigator.geolocation.watchPosition(pos => {
+      const ll = [pos.coords.latitude, pos.coords.longitude];
+      locLayer.clearLayers();
+      L.circle(ll, { radius: pos.coords.accuracy, color: '#2a6fdb', weight: 1, fillColor: '#2a6fdb', fillOpacity: 0.12, interactive: false }).addTo(locLayer);
+      L.circleMarker(ll, { radius: 8, color: '#ffffff', weight: 3, fillColor: '#2a6fdb', fillOpacity: 1 })
+        .bindPopup('<div class="popup-name">You are here</div>').addTo(locLayer);
+      if (locFirstFix) {
+        locFirstFix = false;
+        map.setView(ll, Math.max(map.getZoom(), 15));
+      }
+    }, err => {
+      stopLocating(btn);
+      toast(err.code === 1 ? 'Location permission was denied. Allow it for this site in your browser settings.' : 'Could not get your location.');
+    }, { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 });
+  }
+
+  const LocateControl = L.Control.extend({
+    options: { position: 'topleft' },
+    onAdd: function () {
+      const box = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+      const a = L.DomUtil.create('a', 'locate-btn', box);
+      a.href = '#';
+      a.title = 'Show my location';
+      a.setAttribute('role', 'button');
+      a.setAttribute('aria-label', 'Show my location');
+      a.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>';
+      L.DomEvent.disableClickPropagation(box);
+      L.DomEvent.on(a, 'click', e => {
+        L.DomEvent.preventDefault(e);
+        if (locWatch === null) startLocating(a); else stopLocating(a);
+      });
+      return box;
+    }
+  });
+  map.addControl(new LocateControl());
+
+  showDay(1);
+</script>
+
+</body>
+</html>
