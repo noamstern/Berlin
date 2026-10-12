@@ -2,582 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Berlin Trip Map — 15–20 October</title>
-<style>
-/* required styles */
-
-.leaflet-pane,
-.leaflet-tile,
-.leaflet-marker-icon,
-.leaflet-marker-shadow,
-.leaflet-tile-pane,
-.leaflet-tile-container,
-.leaflet-pane > svg,
-.leaflet-pane > canvas,
-.leaflet-zoom-box,
-.leaflet-image-layer,
-.leaflet-layer {
-	position: absolute;
-	left: 0;
-	top: 0;
-	}
-.leaflet-container {
-	overflow: hidden;
-	}
-.leaflet-tile,
-.leaflet-marker-icon,
-.leaflet-marker-shadow {
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	user-select: none;
-	-webkit-user-drag: none;
-	}
-.leaflet-tile::selection {
-	background: transparent;
-	}
-.leaflet-safari .leaflet-tile {
-	image-rendering: -webkit-optimize-contrast;
-	}
-.leaflet-safari .leaflet-tile-container {
-	width: 1600px;
-	height: 1600px;
-	-webkit-transform-origin: 0 0;
-	}
-.leaflet-marker-icon,
-.leaflet-marker-shadow {
-	display: block;
-	}
-.leaflet-container .leaflet-overlay-pane svg,
-.leaflet-container .leaflet-marker-pane img,
-.leaflet-container .leaflet-shadow-pane img,
-.leaflet-container .leaflet-tile-pane img,
-.leaflet-container img.leaflet-image-layer,
-.leaflet-container .leaflet-tile {
-	max-width: none !important;
-	max-height: none !important;
-	}
-
-.leaflet-container.leaflet-touch-zoom {
-	-ms-touch-action: pan-x pan-y;
-	touch-action: pan-x pan-y;
-	}
-.leaflet-container.leaflet-touch-drag {
-	-ms-touch-action: pinch-zoom;
-	touch-action: none;
-	touch-action: pinch-zoom;
-	}
-.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
-	-ms-touch-action: none;
-	touch-action: none;
-	}
-.leaflet-container {
-	-webkit-tap-highlight-color: transparent;
-	}
-.leaflet-container a {
-	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
-	}
-.leaflet-tile {
-	filter: inherit;
-	visibility: hidden;
-	}
-.leaflet-tile-loaded {
-	visibility: inherit;
-	}
-.leaflet-zoom-box {
-	width: 0;
-	height: 0;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	z-index: 800;
-	}
-.leaflet-overlay-pane svg {
-	-moz-user-select: none;
-	}
-.leaflet-pane         { z-index: 400; }
-.leaflet-tile-pane    { z-index: 200; }
-.leaflet-overlay-pane { z-index: 400; }
-.leaflet-shadow-pane  { z-index: 500; }
-.leaflet-marker-pane  { z-index: 600; }
-.leaflet-tooltip-pane { z-index: 650; }
-.leaflet-popup-pane   { z-index: 700; }
-.leaflet-map-pane canvas { z-index: 100; }
-.leaflet-map-pane svg    { z-index: 200; }
-.leaflet-vml-shape {
-	width: 1px;
-	height: 1px;
-	}
-.lvml {
-	behavior: url(#default#VML);
-	display: inline-block;
-	position: absolute;
-	}
-.leaflet-control {
-	position: relative;
-	z-index: 800;
-	pointer-events: visiblePainted;
-	pointer-events: auto;
-	}
-.leaflet-top,
-.leaflet-bottom {
-	position: absolute;
-	z-index: 1000;
-	pointer-events: none;
-	}
-.leaflet-top {
-	top: 0;
-	}
-.leaflet-right {
-	right: 0;
-	}
-.leaflet-bottom {
-	bottom: 0;
-	}
-.leaflet-left {
-	left: 0;
-	}
-.leaflet-control {
-	float: left;
-	clear: both;
-	}
-.leaflet-right .leaflet-control {
-	float: right;
-	}
-.leaflet-top .leaflet-control {
-	margin-top: 10px;
-	}
-.leaflet-bottom .leaflet-control {
-	margin-bottom: 10px;
-	}
-.leaflet-left .leaflet-control {
-	margin-left: 10px;
-	}
-.leaflet-right .leaflet-control {
-	margin-right: 10px;
-	}
-.leaflet-fade-anim .leaflet-popup {
-	opacity: 0;
-	-webkit-transition: opacity 0.2s linear;
-	-moz-transition: opacity 0.2s linear;
-	transition: opacity 0.2s linear;
-	}
-.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
-	opacity: 1;
-	}
-.leaflet-zoom-animated {
-	-webkit-transform-origin: 0 0;
-	-ms-transform-origin: 0 0;
-	transform-origin: 0 0;
-	}
-svg.leaflet-zoom-animated {
-	will-change: transform;
-	}
-.leaflet-zoom-anim .leaflet-zoom-animated {
-	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
-	-moz-transition: -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
-	transition: transform 0.25s cubic-bezier(0,0,0.25,1);
-	}
-.leaflet-zoom-anim .leaflet-tile,
-.leaflet-pan-anim .leaflet-tile {
-	-webkit-transition: none;
-	-moz-transition: none;
-	transition: none;
-	}
-.leaflet-zoom-anim .leaflet-zoom-hide {
-	visibility: hidden;
-	}
-.leaflet-interactive {
-	cursor: pointer;
-	}
-.leaflet-grab {
-	cursor: -webkit-grab;
-	cursor: -moz-grab;
-	cursor: grab;
-	}
-.leaflet-crosshair,
-.leaflet-crosshair .leaflet-interactive {
-	cursor: crosshair;
-	}
-.leaflet-popup-pane,
-.leaflet-control {
-	cursor: auto;
-	}
-.leaflet-dragging .leaflet-grab,
-.leaflet-dragging .leaflet-grab .leaflet-interactive,
-.leaflet-dragging .leaflet-marker-draggable {
-	cursor: move;
-	cursor: -webkit-grabbing;
-	cursor: -moz-grabbing;
-	cursor: grabbing;
-	}
-.leaflet-marker-icon,
-.leaflet-marker-shadow,
-.leaflet-image-layer,
-.leaflet-pane > svg path,
-.leaflet-tile-container {
-	pointer-events: none;
-	}
-.leaflet-marker-icon.leaflet-interactive,
-.leaflet-image-layer.leaflet-interactive,
-.leaflet-pane > svg path.leaflet-interactive,
-svg.leaflet-image-layer.leaflet-interactive path {
-	pointer-events: visiblePainted;
-	pointer-events: auto;
-	}
-.leaflet-container {
-	background: #ddd;
-	outline-offset: 1px;
-	}
-.leaflet-container a {
-	color: #0078A8;
-	}
-.leaflet-zoom-box {
-	border: 2px dotted #38f;
-	background: rgba(255,255,255,0.5);
-	}
-.leaflet-container {
-	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	font-size: 0.75rem;
-	line-height: 1.5;
-	}
-.leaflet-bar {
-	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-	border-radius: 4px;
-	}
-.leaflet-bar a {
-	background-color: #fff;
-	border-bottom: 1px solid #ccc;
-	width: 26px;
-	height: 26px;
-	line-height: 26px;
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	color: black;
-	}
-.leaflet-bar a,
-.leaflet-control-layers-toggle {
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	display: block;
-	}
-.leaflet-bar a:hover,
-.leaflet-bar a:focus {
-	background-color: #f4f4f4;
-	}
-.leaflet-bar a:first-child {
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	}
-.leaflet-bar a:last-child {
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	border-bottom: none;
-	}
-.leaflet-bar a.leaflet-disabled {
-	cursor: default;
-	background-color: #f4f4f4;
-	color: #bbb;
-	}
-.leaflet-touch .leaflet-bar a {
-	width: 30px;
-	height: 30px;
-	line-height: 30px;
-	}
-.leaflet-touch .leaflet-bar a:first-child {
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
-	}
-.leaflet-touch .leaflet-bar a:last-child {
-	border-bottom-left-radius: 2px;
-	border-bottom-right-radius: 2px;
-	}
-.leaflet-control-zoom-in,
-.leaflet-control-zoom-out {
-	font: bold 18px 'Lucida Console', Monaco, monospace;
-	text-indent: 1px;
-	}
-.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
-	font-size: 22px;
-	}
-.leaflet-control-layers {
-	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-	background: #fff;
-	border-radius: 5px;
-	}
-.leaflet-control-layers-toggle {
-	width: 36px;
-	height: 36px;
-	}
-.leaflet-touch .leaflet-control-layers-toggle {
-	width: 44px;
-	height: 44px;
-	}
-.leaflet-control-layers .leaflet-control-layers-list,
-.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
-	display: none;
-	}
-.leaflet-control-layers-expanded .leaflet-control-layers-list {
-	display: block;
-	position: relative;
-	}
-.leaflet-control-layers-expanded {
-	padding: 6px 10px 6px 6px;
-	color: #333;
-	background: #fff;
-	}
-.leaflet-control-layers-scrollbar {
-	overflow-y: scroll;
-	overflow-x: hidden;
-	padding-right: 5px;
-	}
-.leaflet-control-layers-selector {
-	margin-top: 2px;
-	position: relative;
-	top: 1px;
-	}
-.leaflet-control-layers label {
-	display: block;
-	font-size: 13px;
-	font-size: 1.08333em;
-	}
-.leaflet-control-layers-separator {
-	height: 0;
-	border-top: 1px solid #ddd;
-	margin: 5px -10px 5px -6px;
-	}
-.leaflet-default-icon-path {
-	background-image: url(images/marker-icon.png);
-	}
-.leaflet-control-attribution {
-	background: #fff;
-	background: rgba(255, 255, 255, 0.8);
-	margin: 0;
-	}
-.leaflet-control-attribution,
-.leaflet-control-scale-line {
-	padding: 0 5px;
-	color: #333;
-	line-height: 1.4;
-	}
-.leaflet-control-attribution a {
-	text-decoration: none;
-	}
-.leaflet-control-attribution a:hover,
-.leaflet-control-attribution a:focus {
-	text-decoration: underline;
-	}
-.leaflet-attribution-flag {
-	display: inline !important;
-	vertical-align: baseline !important;
-	width: 1em;
-	height: 0.6669em;
-	}
-.leaflet-left .leaflet-control-scale {
-	margin-left: 5px;
-	}
-.leaflet-bottom .leaflet-control-scale {
-	margin-bottom: 5px;
-	}
-.leaflet-control-scale-line {
-	border: 2px solid #777;
-	border-top: none;
-	line-height: 1.1;
-	padding: 2px 5px 1px;
-	font-size: 11px;
-	white-space: nowrap;
-	overflow: hidden;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	background: #fff;
-	background: rgba(255, 255, 255, 0.8);
-	}
-.leaflet-control-scale-line:not(:first-child) {
-	border-top: 2px solid #777;
-	border-bottom: none;
-	margin-top: -2px;
-	}
-.leaflet-control-scale-line:not(:first-child):not(:last-child) {
-	border-bottom: 2px solid #777;
-	}
-.leaflet-touch .leaflet-control-attribution,
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-	box-shadow: none;
-	}
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-	border: 2px solid rgba(0,0,0,0.2);
-	background-clip: padding-box;
-	}
-.leaflet-popup {
-	position: absolute;
-	text-align: center;
-	margin-bottom: 20px;
-	}
-.leaflet-popup-content-wrapper {
-	padding: 1px;
-	text-align: left;
-	border-radius: 12px;
-	}
-.leaflet-popup-content {
-	margin: 13px 24px 13px 20px;
-	line-height: 1.3;
-	font-size: 13px;
-	font-size: 1.08333em;
-	min-height: 1px;
-	}
-.leaflet-popup-content p {
-	margin: 17px 0;
-	margin: 1.3em 0;
-	}
-.leaflet-popup-tip-container {
-	width: 40px;
-	height: 20px;
-	position: absolute;
-	left: 50%;
-	margin-top: -1px;
-	margin-left: -20px;
-	overflow: hidden;
-	pointer-events: none;
-	}
-.leaflet-popup-tip {
-	width: 17px;
-	height: 17px;
-	padding: 1px;
-
-	margin: -10px auto 0;
-	pointer-events: auto;
-
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	transform: rotate(45deg);
-	}
-.leaflet-popup-content-wrapper,
-.leaflet-popup-tip {
-	background: white;
-	color: #333;
-	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-	}
-.leaflet-container a.leaflet-popup-close-button {
-	position: absolute;
-	top: 0;
-	right: 0;
-	border: none;
-	text-align: center;
-	width: 24px;
-	height: 24px;
-	font: 16px/24px Tahoma, Verdana, sans-serif;
-	color: #757575;
-	text-decoration: none;
-	background: transparent;
-	}
-.leaflet-container a.leaflet-popup-close-button:hover,
-.leaflet-container a.leaflet-popup-close-button:focus {
-	color: #585858;
-	}
-.leaflet-popup-scrolled {
-	overflow: auto;
-	}
-.leaflet-oldie .leaflet-popup-content-wrapper {
-	-ms-zoom: 1;
-	}
-.leaflet-oldie .leaflet-popup-tip {
-	width: 24px;
-	margin: 0 auto;
-
-	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
-	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
-	}
-.leaflet-oldie .leaflet-control-zoom,
-.leaflet-oldie .leaflet-control-layers,
-.leaflet-oldie .leaflet-popup-content-wrapper,
-.leaflet-oldie .leaflet-popup-tip {
-	border: 1px solid #999;
-	}
-.leaflet-div-icon {
-	background: #fff;
-	border: 1px solid #666;
-	}
-.leaflet-tooltip {
-	position: absolute;
-	padding: 6px;
-	background-color: #fff;
-	border: 1px solid #fff;
-	border-radius: 3px;
-	color: #222;
-	white-space: nowrap;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	pointer-events: none;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-	}
-.leaflet-tooltip.leaflet-clickable {
-	cursor: pointer;
-	pointer-events: auto;
-	}
-.leaflet-tooltip-top:before,
-.leaflet-tooltip-bottom:before,
-.leaflet-tooltip-left:before,
-.leaflet-tooltip-right:before {
-	position: absolute;
-	pointer-events: none;
-	border: 6px solid transparent;
-	background: transparent;
-	content: "";
-	}
-.leaflet-tooltip-bottom {
-	margin-top: 6px;
-	}
-.leaflet-tooltip-top {
-	margin-top: -6px;
-	}
-.leaflet-tooltip-bottom:before,
-.leaflet-tooltip-top:before {
-	left: 50%;
-	margin-left: -6px;
-	}
-.leaflet-tooltip-top:before {
-	bottom: 0;
-	margin-bottom: -12px;
-	border-top-color: #fff;
-	}
-.leaflet-tooltip-bottom:before {
-	top: 0;
-	margin-top: -12px;
-	margin-left: -6px;
-	border-bottom-color: #fff;
-	}
-.leaflet-tooltip-left {
-	margin-left: -6px;
-	}
-.leaflet-tooltip-right {
-	margin-left: 6px;
-	}
-.leaflet-tooltip-left:before,
-.leaflet-tooltip-right:before {
-	top: 50%;
-	margin-top: -6px;
-	}
-.leaflet-tooltip-left:before {
-	right: 0;
-	margin-right: -12px;
-	border-left-color: #fff;
-	}
-.leaflet-tooltip-right:before {
-	left: 0;
-	margin-left: -12px;
-	border-right-color: #fff;
-	}
-
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Berlin Itinerary — 15–20 October</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1c1a17;
@@ -586,521 +15,878 @@ svg.leaflet-image-layer.leaflet-interactive path {
     --rule: #d8d0c0;
     --sub: #6b6357;
 
-    --attraction: #16324a;
-    --dining: #7a4a17;
-    --show: #5c1f33;
-    --exhibition: #3b4a2f;
-    --sport: #a1481c;
-    --wellness: #1f5c56;
-    --tour: #6b5a1f;
-    --boat: #2a6f8f;
-    --hotel: #4a4a4a;
-    --travel: #7a7a7a;
-    --badweather: #46545c;
+    --attraction: #16324a;   /* prussian blue */
+    --dining: #7a4a17;       /* sandstone/ochre */
+    --show: #5c1f33;         /* wine/burgundy */
+    --exhibition: #3b4a2f;   /* museum green */
+    --sport: #a1481c;        /* burnt orange */
+    --wellness: #1f5c56;     /* deep teal */
+    --tour: #6b5a1f;         /* olive gold */
+    --boat: #2a6f8f;         /* nautical blue */
+    --area: #6b3fa0;         /* violet */
+    --badweather: #46545c;   /* slate gray */
+
+    --ok: #2f6b3a;
+    --pending: #a1701c;
+    --todo: #a13030;
+
+    --gold: #b0894a;
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #ece7dc;
+      --paper: #171512;
+      --paper-raised: #1f1c18;
+      --rule: #3a352c;
+      --sub: #a49b8a;
+
+      --attraction: #7fa8c9;
+      --dining: #d9a86c;
+      --show: #d98fab;
+      --exhibition: #8fb37a;
+      --sport: #e0895a;
+      --wellness: #6ecbc0;
+      --tour: #cdb45a;
+      --boat: #7ec3dd;
+      --area: #b89bdb;
+      --badweather: #a8b3ba;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #ece7dc;
+    --paper: #171512;
+    --paper-raised: #1f1c18;
+    --rule: #3a352c;
+    --sub: #a49b8a;
+
+    --attraction: #7fa8c9;
+    --dining: #d9a86c;
+    --show: #d98fab;
+    --exhibition: #8fb37a;
+    --sport: #e0895a;
+    --wellness: #6ecbc0;
+    --tour: #cdb45a;
+    --boat: #7ec3dd;
+    --area: #b89bdb;
+    --badweather: #a8b3ba;
   }
 
   * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
 
   body {
+    margin: 0;
     background: var(--paper);
     color: var(--ink);
     font-family: 'IBM Plex Sans', system-ui, sans-serif;
-    display: flex;
-    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
   }
 
-  header {
-    padding: 18px 20px 14px;
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  header.masthead {
+    padding: 56px 0 32px;
     border-bottom: 1px solid var(--rule);
-    background: var(--paper);
-    flex-shrink: 0;
   }
 
   h1 {
     font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 1.4rem;
-    margin: 0 0 10px;
-  }
-
-  .tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .tab {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.82rem;
     font-weight: 500;
-    padding: 6px 12px;
-    border: 1px solid var(--rule);
-    border-radius: 16px;
-    background: var(--paper-raised);
-    color: var(--sub);
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-  }
-  .tab:hover { border-color: var(--ink); }
-  .tab.active {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
+    font-size: clamp(2rem, 5.5vw, 3rem);
+    line-height: 1.05;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
   }
 
+  .dek {
+    font-size: 1.02rem;
+    color: var(--sub);
+    max-width: 50ch;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* legend */
   .legend {
+    margin-top: 28px;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 14px;
-    padding: 10px 20px 12px;
-    font-size: 0.76rem;
+    gap: 10px 18px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.8rem;
     color: var(--sub);
-    border-bottom: 1px solid var(--rule);
+  }
+  .legend-dot {
+    width: 9px; height: 9px; border-radius: 50%;
     flex-shrink: 0;
   }
-  .legend-item { display: flex; align-items: center; gap: 5px; }
-  .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-
-  #map {
-    flex: 1;
-    min-height: 0;
+  .legend-divider {
+    width: 1px;
+    background: var(--rule);
+    align-self: stretch;
+    margin: 0 2px;
   }
 
-  .leaflet-popup-content-wrapper {
-    border-radius: 6px;
+  section.day {
+    padding-top: 48px;
   }
-  .popup-name {
+  .day-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .day-title {
     font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 2px;
-  }
-  .popup-note {
-    font-size: 0.82rem;
-    color: var(--sub);
-  }
-
-  .map-label {
-    background: rgba(255,255,255,0.88);
-    border: none;
-    box-shadow: none;
-    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 500;
-    font-size: 0.78rem;
-    color: var(--ink);
-    padding: 1px 6px;
-    border-radius: 3px;
+    font-size: 1.5rem;
+    margin: 0;
   }
-  .map-label::before { display: none; }
-
-  .locate-btn { display: flex !important; align-items: center; justify-content: center; }
-  .locate-btn.active { background: #2a6fdb !important; color: #fff !important; }
-  .loc-toast {
-    display: none;
-    position: fixed;
-    left: 50%;
-    bottom: 24px;
-    transform: translateX(-50%);
-    max-width: min(90vw, 420px);
-    padding: 10px 14px;
-    border-radius: 8px;
-    background: rgba(28,26,23,0.92);
-    color: #fff;
+  .day-sub {
     font-size: 0.85rem;
-    line-height: 1.4;
-    z-index: 2000;
+    color: var(--sub);
+    white-space: nowrap;
+  }
+
+  .note {
+    font-size: 0.88rem;
+    color: var(--sub);
+    padding: 6px 0 6px 18px;
+    border-left: 2px solid var(--rule);
+    margin: 4px 0 14px;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 4px 40px 1fr;
+    gap: 0 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+  .item:first-of-type { border-top: none; }
+
+  .bar { background: var(--accent); border-radius: 2px; align-self: stretch; }
+
+  .icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .icon svg { width: 19px; height: 19px; color: var(--accent); }
+
+  .item-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .item-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--accent);
+  }
+  .cat-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .status {
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+    font-weight: 600;
+    border-radius: 3px;
+    padding: 2px 7px;
+    white-space: nowrap;
+  }
+  .status.booked { color: var(--ok); border: 1px solid var(--ok); }
+  .status.progress { color: var(--pending); border: 1px solid var(--pending); }
+  .status.todo { color: var(--todo); border: 1px solid var(--todo); }
+
+  .item-blurb {
+    color: var(--sub);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 58ch;
+  }
+
+  .attraction { --accent: var(--attraction); }
+  .dining { --accent: var(--dining); }
+  .show { --accent: var(--show); }
+  .exhibition { --accent: var(--exhibition); }
+  .sport { --accent: var(--sport); }
+  .wellness { --accent: var(--wellness); }
+  .tour { --accent: var(--tour); }
+  .boat { --accent: var(--boat); }
+  .area { --accent: var(--area); }
+  .badweather { --accent: var(--badweather); }
+
+  .best-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.01em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 1px 7px;
+    font-weight: 500;
+  }
+
+  .checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .check-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 9px 0;
+    border-top: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+  .check-row:first-child { border-top: none; }
+  .check-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .check-day {
+    font-size: 0.78rem;
+    color: var(--sub);
+    width: 52px;
+    flex-shrink: 0;
+  }
+  .check-name {
+    flex: 1;
+    min-width: 200px;
+    font-size: 0.95rem;
+    color: var(--row-accent);
+  }
+  .check-name em {
+    color: var(--sub);
+    font-style: normal;
+    font-size: 0.85rem;
+  }
+  .check-time {
+    font-size: 0.85rem;
+    color: var(--sub);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    color: var(--sub);
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 480px) {
+    .item { grid-template-columns: 3px 34px 1fr; }
+    .icon { width: 34px; height: 34px; }
   }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<header>
-  <h1>Berlin, 15–20 October</h1>
-  <div class="tabs" id="tabs"></div>
-</header>
+  <header class="masthead">
+    <h1>Berlin Itinerary</h1>
+    <p class="dek">15–20 October · day by day, with what's booked, in progress, and still needed.</p>
 
-<div class="legend">
-  <span class="legend-item"><span class="legend-dot" style="background:var(--hotel)"></span>Hotel</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--tour)"></span>Guided Tour / Masterclass</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--attraction)"></span>Attraction</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--dining)"></span>Dining</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--show)"></span>Show / Music</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--exhibition)"></span>Exhibition</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--sport)"></span>Sport</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--wellness)"></span>Wellness</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--travel)"></span>Travel</span>
-  <span class="legend-item"><svg viewBox="0 0 24 24" width="12" height="12"><path d="M12 2.5l2.9 6.4 7 .6-5.3 4.6 1.6 6.9L12 17.2 5.8 21l1.6-6.9-5.3-4.6 7-.6z" fill="#d4a017" stroke="#ffffff" stroke-width="1"/></svg>Area to Explore</span>
-  <span class="legend-item">🌧️ Bad Weather Option</span>
-  <span class="legend-item">🍽️ Lunch Option</span>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--attraction)"></span>Attraction</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--dining)"></span>Dining</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--show)"></span>Show / Music</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--exhibition)"></span>Exhibition</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--sport)"></span>Sport</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--wellness)"></span>Wellness</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--tour)"></span>Tour</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--boat)"></span>Boat</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--area)"></span>Area</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--badweather)"></span>Bad Weather</span>
+      <span class="legend-divider"></span>
+      <span class="legend-item" style="color:var(--ok); font-weight:600;">● Booked</span>
+      <span class="legend-item" style="color:var(--pending); font-weight:600;">● In progress</span>
+      <span class="legend-item" style="color:var(--todo); font-weight:600;">● Not booked</span>
+    </div>
+  </header>
+
+  <!-- THU 15 -->
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Thu · Oct 15 — Arrival</h2>
+      <span class="day-sub">Land BER ~9:35 AM</span>
+    </div>
+    <p class="note">Check-in isn't until 3:00 PM — bags go straight to the bell desk on arrival.</p>
+
+    <div class="item tour">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 20l-5 2V6l5-2m0 16l6 2m-6-18l6 2m0 0l5-2v16l-5 2m0-16v16"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Guided Tour — Historic Berlin</span><span class="cat-label">Tour</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">English-speaking expert guide, booked through the hotel — meet in the lobby, 1:00 PM, 2.5 hours. Brandenburg Gate, Reichstag (exterior), Holocaust Memorial, Hitler's Bunker, Detlev-Rohwedder-Haus, Berlin Wall Memorial, Checkpoint Charlie.</p>
+      </div>
+    </div>
+
+    <p class="note">Check-in happens after the tour, once you're back at the hotel.</p>
+
+    <div class="item dining">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3v6a3 3 0 003 3v9M17 3v18M17 3c-2 0-3 2-3 5s1 4 3 4"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Brasserie Quarré</span><span class="cat-label">Dining</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Confirmed for 2, 5:30 PM. Casual terrace inside the hotel, overlooking Brandenburg Gate — a quick dinner before the concert, not a tasting menu.</p>
+      </div>
+    </div>
+
+    <div class="item show">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Vivaldi's Four Seasons</span><span class="cat-label">Show / Music</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Dresdner Residenz Orchester, Philharmonie Berlin (Kammermusiksaal), 8:00 PM.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRI 16 -->
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Fri · Oct 16</h2>
+    </div>
+
+    <div class="item tour">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 20l-5 2V6l5-2m0 16l6 2m-6-18l6 2m0 0l5-2v16l-5 2m0-16v16"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Guided Tour — Reichstag</span><span class="cat-label">Tour</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">English-speaking expert guide, booked through the hotel — meet in the lobby, 9:30 AM, 2.5 hours. Reichstag, Plenary Chamber, and the Dome.</p>
+      </div>
+    </div>
+
+    <div class="item exhibition">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><circle cx="9.5" cy="10" r="1.6"/><path d="M6 17l4-4 3 3 5-6"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Museum Island — Neues Museum & Alte Nationalgalerie</span><span class="cat-label">Exhibition</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Suggested time: 12:30–2:30 PM, right after the Reichstag tour. "Destiny in the Stars" and "Encounters of the 19th Century".</p>
+      </div>
+    </div>
+
+    <div class="item attraction">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 21V10M18 21V10M6 10l6-7 6 7M9 21v-5h6v5"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">TV Tower</span><span class="cat-label">Attraction</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Fast Track tickets via GetYourGuide app, 2:45 PM. Quick panoramic stop, an easy walk from Museum Island.</p>
+      </div>
+    </div>
+
+    <div class="item exhibition">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l3 5h6l-3 5 3 5h-6l-3 5-3-5H3l3-5-3-5h6z"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Jewish Museum Berlin</span><span class="cat-label">Exhibition</span><span class="status todo">Not booked</span></div>
+        <p class="item-blurb">Suggested time: 3:30–5:30 PM, after the TV Tower (about 15 minutes by Uber). Lindenstraße 9–14, Kreuzberg. Free admission to the core exhibition. Open 10 AM–6 PM, last admission 5:00 PM.</p>
+      </div>
+    </div>
+
+    <div class="item exhibition">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">DARK MATTER — Christopher Bauder</span><span class="cat-label">Exhibition</span><span class="status todo">Not booked</span></div>
+        <p class="item-blurb">Suggested time: 6:30–7:30 PM, after the Jewish Museum. Light, sound and kinetic installations in a former factory, Köpenicker Chaussee 46 (Lichtenberg), about 25–30 minutes from Kreuzberg by Uber. Open Fri 12:00–11:00 PM. Tickets €19 on weekdays, online booking recommended. Tight before the 8:15 PM dinner; Saturday morning (open from 11:00 AM) is the alternative. Some rooms have strobe effects.</p>
+      </div>
+    </div>
+
+    <div class="item attraction">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v3M12 19v3M4.2 4.2l2.2 2.2M17.6 17.6l2.2 2.2M2 12h3M19 12h3M4.2 19.8l2.2-2.2M17.6 6.4l2.2-2.2"/><circle cx="12" cy="12" r="4"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Festival of Lights — evening walk</span><span class="cat-label">Attraction</span></div>
+        <p class="item-blurb">Landmarks lit up around the Gate and Cathedral — runs through Oct 18.</p>
+      </div>
+    </div>
+
+    <div class="item dining">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3v6a3 3 0 003 3v9M17 3v18M17 3c-2 0-3 2-3 5s1 4 3 4"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Cookies Cream <span title="1 Michelin Star" style="color:#a51c1c; font-size:0.9em;">✽</span></span><span class="cat-label">Dining</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">8:15 PM. Vegetarian fine dining, a different register from the tasting-menu norm.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAT 17 -->
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Sat · Oct 17</h2>
+    </div>
+
+    <div class="item attraction">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 21V9l4-3v3l4-3v3l4-3v3l4-3v12"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Charlottenburg Palace</span><span class="cat-label">Attraction</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Entry time: 10:35 AM — Schloss Charlottenburg, Altes Schloss. Booked for Sat, Oct 17; East Side Gallery follows afterward.</p>
+      </div>
+    </div>
+
+    <div class="item attraction">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12c3-4 6 4 9 0s6 4 9 0"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">East Side Gallery</span><span class="cat-label">Attraction</span></div>
+        <p class="item-blurb">After Charlottenburg Palace. Longest surviving stretch of the Wall, painted over.</p>
+      </div>
+    </div>
+
+    <div class="item dining">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v6a8 8 0 01-16 0V4z"/><path d="M4 4H2v2a3 3 0 003 3M20 4h2v2a3 3 0 01-3 3M12 18v3M8 21h8"/></svg></div>
+      <div>
+        <div class="item-name">Lunch: Markthalle Neun</div>
+        <p class="item-blurb">Casual street-food market in Kreuzberg, on the way — no booking needed.</p>
+      </div>
+    </div>
+
+    <div class="item sport">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 3v3m0 12v3m9-9h-3M6 12H3M8 8l1.5 1.5M16 8l-1.5 1.5M8 16l1.5-1.5M16 16l-1.5-1.5"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Union Berlin vs. Borussia Dortmund</span><span class="cat-label">Sport</span><span class="status progress">Not confirmed</span></div>
+        <p class="item-blurb">Kickoff 3:30 PM (subject to change), Stadion An der Alten Försterei. 2 tickets, Sektor 3 — ordered through a ticket reseller, not yet confirmed.</p>
+      </div>
+    </div>
+
+    <div class="item dining">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3v6a3 3 0 003 3v9M17 3v18M17 3c-2 0-3 2-3 5s1 4 3 4"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Nobelhart & Schmutzig <span title="1 Michelin Star" style="color:#a51c1c; font-size:0.9em;">✽</span></span><span class="cat-label">Dining</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">8:00 PM, giving time to get back from the match and freshen up. Radical local sourcing at a 28-seat counter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUN 18 -->
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Sun · Oct 18</h2>
+    </div>
+
+    <div class="item attraction">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3M8 21h8"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Entrepreneurship Summit — "What if the economy would serve society? The Power of Purpose"</span><span class="cat-label">Lecture</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Time: 11:15 AM–12:15 PM. Henry-Ford-Bau, Freie Universität Berlin, Garystraße 35, Dahlem — about 35–40 minutes by Uber from the Adlon, so leave the hotel by about 10:25 AM. Speakers: Carsten Waldeck, Naomi Ryland, Elisabeth Pichler, Jenny Eschweiler. In English.</p>
+      </div>
+    </div>
+
+    <div class="item attraction">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3M8 21h8"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Entrepreneurship Summit — "Beating capitalism with capitalism"</span><span class="cat-label">Lecture</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Time: 12:30–1:30 PM, same building, straight after the first lecture. Henry-Ford-Bau, Freie Universität Berlin, Garystraße 35, Dahlem. Speaker: Dr. oec. Patrick Stähler. In English.</p>
+      </div>
+    </div>
+
+    <div class="item exhibition">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="9" r="4"/><path d="M8 13l-2 8 6-3 6 3-2-8"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Gemäldegalerie — "Portraits!"</span><span class="cat-label">Exhibition</span><span class="status todo">Not booked</span></div>
+        <p class="item-blurb">Suggested time: 2:30 PM, after the lectures and the ride back from Dahlem. "Portraits!" — eighty works spanning five centuries, from Botticelli to Tamara de Lempicka. Open Sundays 10 AM–6 PM; closed Mondays.</p>
+      </div>
+    </div>
+
+    <div class="item exhibition">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="14" rx="1"/><path d="M3 13l5-5 4 4 6-6"/><path d="M8 21h8"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Neue Nationalgalerie — Fujiko Nakaya Fog Sculpture</span><span class="cat-label">Exhibition</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Booked for Oct 18. Fog activates roughly once an hour, ~8 minutes each — time it near the top of the hour.</p>
+      </div>
+    </div>
+
+    <div class="item attraction">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-5-7-11a7 7 0 0114 0c0 6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Tiergarten & Victory Column</span><span class="cat-label">Attraction</span></div>
+        <p class="item-blurb">Right next to the Kulturforum — an easy walk afterward.</p>
+      </div>
+    </div>
+
+    <div class="item show">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c2 3 4 5 4 8a4 4 0 01-8 0c0-3 2-5 4-8z"/><path d="M6 22c1-4 3-6 6-6s5 2 6 6"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Cirque du Soleil — ALIZÉ</span><span class="cat-label">Show / Music</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Theater am Potsdamer Platz, 5:00 PM, runs about 2.5 hours (ends ~7:30 PM).</p>
+      </div>
+    </div>
+
+    <div class="item dining">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3v6a3 3 0 003 3v9M17 3v18M17 3c-2 0-3 2-3 5s1 4 3 4"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Dinner near Potsdamer Platz</span><span class="cat-label">Dining</span><span class="status todo">Not booked</span></div>
+        <p class="item-blurb">Suggested time: 7:45 PM, after ALIZÉ. A few good, casual options right around Potsdamer Platz: Lindenbräu am Potsdamer Platz (beer-hall classics), The Alchemist Bar & Restaurant (playful, cocktail-forward), POTS at The Ritz-Carlton (relaxed take on German dishes), Diekmann (fish, meat, and vegetarian menu), or MAREDO (casual steakhouse in the Potsdamer Platz Arkaden).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MON 19 -->
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Mon · Oct 19</h2>
+    </div>
+
+    <div class="item tour">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11h16l-1.5 7a2 2 0 01-2 1.6H7.5a2 2 0 01-2-1.6L4 11z"/><path d="M8 11V7a4 4 0 018 0v4"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Masterclass — Modern German Cuisine</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">studio32 Berlin, Goltzstraße 32, Schöneberg — 9:30 AM. Amuse-bouche, Maultaschen, potato pancakes, potato dumplings with celeriac schnitzel, a seasonal meat course, and lemon quark mousse.</p>
+      </div>
+    </div>
+
+    <div class="item exhibition">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="14" rx="1"/><path d="M3 13l5-5 4 4 6-6"/><path d="M8 21h8"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">C/O Berlin — Carrie Mae Weems</span><span class="cat-label">Exhibition</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">Suggested time: 1:30–3:30 PM, after the masterclass, leaving time to reach the Story Bunker by 4:00 PM. Photography retrospective.</p>
+      </div>
+    </div>
+
+    <div class="item exhibition">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Berlin Story Bunker</span><span class="cat-label">Exhibition</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">4:00 PM. Schöneberger Straße 23A, next to Anhalter Bahnhof — a WWII air-raid bunker housing the "Hitler – How Could It Happen" exhibition and more; one ticket covers all three exhibitions. Allow 2–3 hours, so plan to head to Clärchens Ballhaus (6:30 PM) around 6:00 PM. Free audio guide, no photos, not wheelchair-accessible.</p>
+      </div>
+    </div>
+
+    <div class="item dining">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3v6a3 3 0 003 3v9M17 3v18M17 3c-2 0-3 2-3 5s1 4 3 4"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Clärchens Ballhaus</span><span class="cat-label">Dining</span><span class="status booked">Booked</span></div>
+        <p class="item-blurb">6:30 PM. A 100+ year old ballroom in Mitte, pizza and German classics in a faded-grandeur hall of mirrors — an easy, relaxed dinner before heading over to A-Trane later in the evening.</p>
+      </div>
+    </div>
+
+    <div class="item show">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20V6l16-2v14M4 20h16M8 20v-6M16 20v-6"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">A-Trane Jazz Club</span><span class="cat-label">Show / Music</span></div>
+        <p class="item-blurb">Suggested time: 8:00 PM. Swapped in for Blinded by Delight, which is dark Mondays. Runs nightly including Monday, and Mondays are free entry — no booking needed, just walk in.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TUE 20 -->
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Tue · Oct 20 — Departure</h2>
+    </div>
+    <p class="note">Light morning.</p>
+
+    <div class="item exhibition">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="14" rx="1"/><path d="M3 13l5-5 4 4 6-6"/><path d="M8 21h8"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Hamburger Bahnhof — Nationalgalerie der Gegenwart</span><span class="cat-label">Exhibition</span><span class="status todo">Not booked</span></div>
+        <p class="item-blurb">Suggested time: 10:00 AM (opening), Tuesday morning before the flight. Contemporary art in a former railway station, Invalidenstraße 50, Mitte, about 10 minutes by Uber from the Adlon. Open Tue 10 AM–6 PM. On now: Ryuichi Sakamoto "seeing sound, hearing time", "Next Door" (Olafur Eliasson, Tomás Saraceno, Thomas Demand and others), Shilpa Gupta, and the Joseph Beuys collection. Tickets online at the SMB ticket shop.</p>
+      </div>
+    </div>
+
+    <div class="item wellness">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 18c2-6 4-10 8-10s6 4 8 10"/><path d="M2 20h20"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Liquidrom</span><span class="cat-label">Wellness</span><span class="status todo">Not booked</span></div>
+        <p class="item-blurb">Suggested time: 12:30–2:30 PM, after Hamburger Bahnhof (about 10 minutes by Uber). Möckernstraße 10, Kreuzberg — warm saltwater pool with underwater music and light. Note: the special "Underwater Dream" installation ends Oct 18, so Tuesday is the regular Liquidrom experience. Check timing against the return flight.</p>
+      </div>
+    </div>
+
+    <div class="item sport" style="grid-template-columns: 4px 40px 1fr;">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 16l20-6-6 20-3-8-8-3z"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Return flight</span><span class="status progress">Resolving</span></div>
+        <p class="item-blurb">LY2372 (waitlist) vs. BZ273 (confirmed) — needs deciding.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Areas to Explore</h2>
+    </div>
+    <p class="note">Neighborhoods worth a wander beyond the scheduled stops, each with a best window to catch it right.</p>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 21h16M6 21V9M10 21V9M14 21V9M18 21V9M4 9l8-6 8 6"/></svg></div>
+      <div>
+        <div class="item-top"><span class="item-name">Historic Mitte Core</span><span class="best-tag">Best: mornings before 10, or evenings through Oct 18</span></div>
+        <p class="item-blurb">Unter den Linden, Brandenburg Gate, Museum Island — the grand boulevard-and-monument core, already on the schedule but worth a slower second pass. Early mornings are quiet for photos; evenings through the 18th catch the Festival of Lights.</p>
+      </div>
+    </div>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><circle cx="9.5" cy="10" r="1.6"/><path d="M6 17l4-4 3 3 5-6"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">Scheunenviertel & Auguststraße</div>
+        <span class="best-tag" style="margin-bottom:6px; display:inline-block;">Best: Tue–Sat afternoon</span>
+        <p class="item-blurb">Gallery-lined streets around Auguststraße, just north of the historic core — small contemporary art spaces, boutiques, and where Clärchens Ballhaus sits. Most galleries are closed Sunday and Monday.</p>
+      </div>
+    </div>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4l7 16 3-7 7-3z"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">Kreuzberg (Bergmannkiez / Kreuzberg 36)</div>
+        <span class="best-tag" style="margin-bottom:6px; display:inline-block;">Best: Thu evening or Sat daytime</span>
+        <p class="item-blurb">Street art, alternative culture, and Berlin's strongest casual food scene. Thursday evenings bring the Street Food market to Markthalle Neun; Saturday daytime is the full weekly market you're already visiting for lunch.</p>
+      </div>
+    </div>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 9h.01M8 15c1 1.5 2.5 2 4 2s3-.5 4-2"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">Prenzlauer Berg & Mauerpark</div>
+        <span class="best-tag" style="margin-bottom:6px; display:inline-block;">Best: Sunday afternoon</span>
+        <p class="item-blurb">Leafy, cafe-filled streets, and on Sundays a big flea market plus open-air karaoke at the Mauerpark amphitheater — genuinely fun, low-key local scene. Currently competes with the busy Saturday and Sunday, so treat as a swap-in rather than an add-on.</p>
+      </div>
+    </div>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 21V9l4-3v3l4-3v3l4-3v3l4-3v12"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">Charlottenburg & Ku'damm</div>
+        <span class="best-tag" style="margin-bottom:6px; display:inline-block;">Best: Saturday, after the Palace (about 10 min by Uber)</span>
+        <p class="item-blurb">West Berlin's big shopping boulevard, anchored by KaDeWe's famous top-floor food hall. Not next to Charlottenburg Palace: the Ku'damm is about 2.5–3 km south of it (around 10 minutes by Uber), and KaDeWe a bit further east. Works as a detour after Saturday morning's palace visit if there's time before heading east.</p>
+      </div>
+    </div>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-5-7-11a7 7 0 0114 0c0 6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">Potsdamer Platz & Tiergarten's south edge</div>
+        <span class="best-tag" style="margin-bottom:6px; display:inline-block;">Best: late afternoon on Oct 18</span>
+        <p class="item-blurb">Modern glass architecture and the Sony Center, right where the Kulturforum and ALIZÉ already sit — an easy area to drift through between the two rather than a separate outing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Escape Rooms</h2>
+    </div>
+    <p class="note">Ideas for a free slot — not scheduled or booked. Tap a name to open its website.</p>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><circle cx="12" cy="11" r="2"/><path d="M12 13v3"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;"><a href="https://the-room-berlin.com/" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">THE ROOM – Live Escape Game Berlin</a></div>
+        <p class="item-blurb" style="margin:0 0 4px;">Ruschestraße 64–66, 10365 Berlin (Lichtenberg)</p>
+        <p class="item-blurb" style="margin:0;"><strong>Rooms:</strong> Beast of Berlin · Ghosthunter Brandon Darkmoor · Go West · The Lost Treasure of Alexander von Humboldt</p>
+      </div>
+    </div>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><circle cx="12" cy="11" r="2"/><path d="M12 13v3"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;"><a href="https://www.miraculum-escape.de/" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">MIRACULUM Premium Escape Room Theater</a></div>
+        <p class="item-blurb" style="margin:0 0 4px;">Stresemannstraße 50, 10963 Berlin (Kreuzberg)</p>
+        <p class="item-blurb" style="margin:0;"><strong>Rooms:</strong> Magistra Miraculorum · Frankenstein · Der König der Träume · The Golden Phoenix · plus an outdoor game, Auroras magischer Würfel</p>
+      </div>
+    </div>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><circle cx="12" cy="11" r="2"/><path d="M12 13v3"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;"><a href="https://80s-movie-escape.de/" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">80s Movie Escape</a></div>
+        <p class="item-blurb" style="margin:0 0 4px;">Nobelstraße 29, 12057 Berlin (Neukölln)</p>
+        <p class="item-blurb" style="margin:0;"><strong>Rooms:</strong> Ghost-Blasters · Back To The Beginning · Nakatomi Tower · The Strange Thing</p>
+      </div>
+    </div>
+
+    <div class="item area">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><circle cx="12" cy="11" r="2"/><path d="M12 13v3"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;"><a href="https://www.illuminati-escape.com/" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline; text-underline-offset:3px;">Illuminati Escape Room Berlin</a></div>
+        <p class="item-blurb" style="margin:0 0 4px;">Abbestraße 17, 10587 Berlin (Charlottenburg) — courtyard, right side, 2nd floor</p>
+        <p class="item-blurb" style="margin:0;"><strong>Rooms:</strong> Alien Grill · Cyber Attack · Jackpot · Titanik 2.0 · plus outdoor games Safe House, Skywatch and Mord am Bischof</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Lunch Options</h2>
+    </div>
+    <p class="note">Casual but distinctive spots near wherever you already are at midday — names only, to keep this quick.</p>
+
+    <div style="margin-bottom:18px;">
+      <div style="font-family:'Fraunces',serif; font-weight:600; color:var(--dining); margin-bottom:5px; font-size:0.98rem;">Thu 15 — near Brandenburg Gate</div>
+      <p class="item-blurb" style="margin:0;">Ishin · Restaurant 1687 · Flamingo Fresh Food Bar · Café am Neuen See</p>
+    </div>
+
+    <div style="margin-bottom:18px;">
+      <div style="font-family:'Fraunces',serif; font-weight:600; color:var(--dining); margin-bottom:5px; font-size:0.98rem;">Fri 16 — near Museum Island / Nikolaiviertel</div>
+      <p class="item-blurb" style="margin:0;">Zum Nußbaum · Brauhaus Georgbräu · Reinhard's · Mutter Hoppe</p>
+    </div>
+
+    <div style="margin-bottom:18px;">
+      <div style="font-family:'Fraunces',serif; font-weight:600; color:var(--dining); margin-bottom:5px; font-size:0.98rem;">Sat 17 — near East Side Gallery / Kreuzberg</div>
+      <p class="item-blurb" style="margin:0;">Markthalle Neun (already on the schedule) · Burgermeister · Curry 36 · Mustafa's Gemüsekebap</p>
+    </div>
+
+    <div style="margin-bottom:18px;">
+      <div style="font-family:'Fraunces',serif; font-weight:600; color:var(--dining); margin-bottom:5px; font-size:0.98rem;">Sat 17 — near Charlottenburg / Ku'damm</div>
+      <p class="item-blurb" style="margin:0;">NENI Berlin · Schildkröte · Paris Bar · Marjellchen</p>
+    </div>
+
+    <div style="margin-bottom:4px;">
+      <div style="font-family:'Fraunces',serif; font-weight:600; color:var(--dining); margin-bottom:5px; font-size:0.98rem;">Mon 19 — near C/O Berlin / City West</div>
+      <p class="item-blurb" style="margin:0;">Zwölf Apostel · Diener Tattersall · Schildkröte (if the workshop doesn't already cover lunch)</p>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <h2 class="day-title">Bad Weather Options</h2>
+    </div>
+    <p class="note">Covered, walk-in-friendly fallbacks if rain forces a change of plan — Liquidrom's already on the schedule (Tuesday), so it's not repeated here.</p>
+
+    <div class="item badweather">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 15l5-5 4 4 3-3 4 4"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">DDR Museum</div>
+        <p class="item-blurb">Interactive East Germany/Cold War museum right on the Spree near the Cathedral. Fully indoor, short and engaging, and easy to walk into without advance booking.</p>
+      </div>
+    </div>
+
+    <div class="item badweather">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 21V10l8-6 8 6v11"/><path d="M9 21v-6h6v6"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">Deutsches Historisches Museum (Zeughaus)</div>
+        <p class="item-blurb">Broader German history than the Cold War focus of the DDR Museum, housed in a grand former armory a short walk from Museum Island.</p>
+      </div>
+    </div>
+
+    <div class="item badweather">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">Sony Center, Potsdamer Platz</div>
+        <p class="item-blurb">Covered glass-canopy plaza with restaurants, cinema, and shops — useful shelter, and especially convenient on the 18th since it's right where ALIZÉ and the Kulturforum already are.</p>
+      </div>
+    </div>
+
+    <div class="item badweather">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 21V10M18 21V10M6 10l6-7 6 7M9 21v-5h6v5"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">KaDeWe</div>
+        <p class="item-blurb">Berlin's grand department store on Ku'damm — several indoor floors of browsing, topped by a well-known food hall.</p>
+      </div>
+    </div>
+
+    <div class="item badweather">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="10" width="18" height="9" rx="1"/><path d="M8 10V6h8v4"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">Mall of Berlin</div>
+        <p class="item-blurb">Large indoor shopping center right at Leipziger Platz — a few minutes' walk from the hotel and Brandenburg Gate, useful as a quick, no-planning shelter.</p>
+      </div>
+    </div>
+
+    <div class="item badweather">
+      <div class="bar"></div>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3v6a3 3 0 003 3v9M17 3v18M17 3c-2 0-3 2-3 5s1 4 3 4"/></svg></div>
+      <div>
+        <div class="item-name" style="margin-bottom:4px;">Café Einstein Stammhaus</div>
+        <p class="item-blurb">A classic Berlin coffeehouse — a cozy, unhurried indoor fallback for a rainy afternoon, close to the hotel.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="day" style="padding-top:56px;">
+    <div class="day-head" style="border-bottom: 2px solid var(--ink);">
+      <h2 class="day-title">Not Booked</h2>
+    </div>
+
+    <div class="checklist">
+
+      <div class="check-row" style="--row-accent:var(--exhibition)"><span class="check-dot" style="background:var(--exhibition)"></span><span class="check-day">Fri 16</span><span class="check-name">Jewish Museum Berlin (free admission)</span><span class="check-time">3:30 PM</span></div>
+      <div class="check-row" style="--row-accent:var(--exhibition)"><span class="check-dot" style="background:var(--exhibition)"></span><span class="check-day">Fri 16</span><span class="check-name">DARK MATTER — Christopher Bauder</span><span class="check-time">6:30–7:30 PM</span></div>
+
+      <div class="check-row" style="--row-accent:var(--sport)"><span class="check-dot" style="background:var(--sport)"></span><span class="check-day">Sat 17</span><span class="check-name">Union Berlin vs. Borussia Dortmund <em>(not confirmed)</em></span><span class="check-time">3:30 PM</span></div>
+
+      <div class="check-row" style="--row-accent:var(--exhibition)"><span class="check-dot" style="background:var(--exhibition)"></span><span class="check-day">Sun 18</span><span class="check-name">Gemäldegalerie ("Portraits!")</span><span class="check-time">2:30 PM</span></div>
+      <div class="check-row" style="--row-accent:var(--dining)"><span class="check-dot" style="background:var(--dining)"></span><span class="check-day">Sun 18</span><span class="check-name">Dinner near Potsdamer Platz <em>(after ALIZÉ)</em></span><span class="check-time">7:45 PM</span></div>
+
+      <div class="check-row" style="--row-accent:var(--exhibition)"><span class="check-dot" style="background:var(--exhibition)"></span><span class="check-day">Tue 20</span><span class="check-name">Hamburger Bahnhof</span><span class="check-time">10:00 AM</span></div>
+      <div class="check-row" style="--row-accent:var(--wellness)"><span class="check-dot" style="background:var(--wellness)"></span><span class="check-day">Tue 20</span><span class="check-name">Liquidrom</span><span class="check-time">12:30–2:30 PM</span></div>
+      <div class="check-row" style="--row-accent:var(--sport)"><span class="check-dot" style="background:var(--sport)"></span><span class="check-day">Tue 20</span><span class="check-name">Return flight <em>(resolving LY2372 waitlist vs. BZ273 confirmed)</em></span><span class="check-time">—</span></div>
+    </div>
+  </section>
+
+  <footer>
+    Colors mark the type of activity; the tag on the right marks its booking status. "Fine Dining Restaurant" nights list only the restaurants actually open that day — Berlin's top kitchens keep varied, often Sunday/Monday-closed schedules, so the pool shrinks night to night. Verify hours directly when booking, especially for Rutz where sources disagreed.
+  </footer>
+
 </div>
-
-<div id="map"></div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-<script>
-  const HOTEL = { name: "Hotel Adlon Kempinski", short: "Adlon", lat: 52.5160742, lng: 13.3804269 };
-
-  const DAY_COLORS = {
-    1: "#c9a15a",
-    2: "#6f9bb0",
-    3: "#b06a4a",
-    4: "#8a76a0",
-    5: "#6f9b6a",
-    6: "#8a8a8a"
-  };
-
-  const DAYS = [
-    {
-      id: 1, label: "Thu 15",
-      items: [
-        { name: "Brandenburg Gate", short: "Brandenburg Gate", lat: 52.5162746, lng: 13.377704, cat: "tour", note: "Guided tour starts 1:00 PM" },
-        { name: "Reichstag Building (exterior)", short: "Reichstag", lat: 52.5186202, lng: 13.3761871, cat: "tour" },
-        { name: "Memorial to the Murdered Jews of Europe", short: "Holocaust Memorial", lat: 52.5139474, lng: 13.3787126, cat: "tour" },
-        { name: "Führerbunker site", short: "Führerbunker", lat: 52.5124772, lng: 13.3809378, cat: "tour", note: "Now a parking lot with an info panel" },
-        { name: "Detlev-Rohwedder-Haus", short: "Rohwedder-Haus", lat: 52.5090932, lng: 13.3843031, cat: "tour", note: "Former Aviation Ministry" },
-        { name: "Berlin Wall Memorial, Bernauer Straße", short: "Wall Memorial", lat: 52.5350521, lng: 13.3901898, cat: "tour" },
-        { name: "Checkpoint Charlie", short: "Checkpoint Charlie", lat: 52.5074434, lng: 13.3903913, cat: "tour" },
-        { name: "Restaurant Quarre", short: "Quarre", lat: 52.5160742, lng: 13.3804269, cat: "dining", note: "Dinner, 5:30 PM" },
-        { name: "Philharmonie Berlin", short: "Philharmonie", lat: 52.5100319, lng: 13.369693, cat: "show", note: "Vivaldi's Four Seasons — booked, 8:00 PM" }
-      ]
-    },
-    {
-      id: 2, label: "Fri 16",
-      items: [
-        { name: "Reichstag — Dome & Plenary Chamber", short: "Reichstag", lat: 52.5186202, lng: 13.3761871, cat: "tour", note: "Guided tour, 9:30 AM" },
-        { name: "Neues Museum", short: "Neues Museum", lat: 52.5201349, lng: 13.3976462, cat: "exhibition" },
-        { name: "Alte Nationalgalerie", short: "Alte Nationalgalerie", lat: 52.5208104, lng: 13.3983529, cat: "exhibition" },
-        { name: "Berlin TV Tower", short: "TV Tower", lat: 52.520815, lng: 13.409419, cat: "attraction" },
-        { name: "Jewish Museum Berlin", short: "Jewish Museum", lat: 52.5021, lng: 13.3953, cat: "exhibition", note: "3:30–5:30 PM, not booked, free admission" },
-        { name: "DARK MATTER — Christopher Bauder", short: "Dark Matter", lat: 52.4927414, lng: 13.4926954, cat: "exhibition", note: "Light art, 6:30–7:30 PM — not booked" },
-        { name: "Cookies Cream", short: "Cookies Cream", lat: 52.5157102, lng: 13.3877054, cat: "dining", note: "Dinner, booked 8:15 PM" }
-      ]
-    },
-    {
-      id: 3, label: "Sat 17",
-      items: [
-        { name: "Charlottenburg Palace", short: "Charlottenburg", lat: 52.5209319, lng: 13.2956165, cat: "attraction", note: "10:35 AM, booked" },
-        { name: "East Side Gallery", short: "East Side Gallery", lat: 52.5050224, lng: 13.4396953, cat: "attraction" },
-        { name: "Markthalle Neun", short: "Markthalle Neun", lat: 52.502135, lng: 13.4315988, cat: "dining", note: "Lunch" },
-        { name: "Stadion An der Alten Försterei", short: "Union Stadium", lat: 52.4573946, lng: 13.5681354, cat: "sport", note: "Union Berlin vs. Dortmund, kickoff 3:30 PM" },
-        { name: "Nobelhart & Schmutzig", short: "Nobelhart & Schmutzig", lat: 52.5053369, lng: 13.3904178, cat: "dining", note: "Dinner, booked 8:00 PM" }
-      ]
-    },
-    {
-      id: 4, label: "Sun 18",
-      items: [
-                { name: "Henry-Ford-Bau — Entrepreneurship Summit", short: "Entrepreneurship Summit", lat: 52.4478804, lng: 13.2786407, cat: "attraction", note: "Two lectures, 11:15 AM–12:15 PM and 12:30–1:30 PM" },
-        { name: "Gemäldegalerie", short: "Gemäldegalerie", lat: 52.5084982, lng: 13.3651754, cat: "exhibition", note: "2:30 PM, not booked" },
-        { name: "Neue Nationalgalerie", short: "Neue Nationalgalerie", lat: 52.5069946, lng: 13.367604, cat: "exhibition" },
-{ name: "Victory Column, Tiergarten", short: "Victory Column", lat: 52.5145229, lng: 13.3501085, cat: "attraction" },
-        { name: "Theater am Potsdamer Platz", short: "ALIZÉ Theater", lat: 52.5072717, lng: 13.3722375, cat: "show", note: "ALIZÉ — booked, 5:00 PM" },
-        { name: "Dinner near Potsdamer Platz", short: "Dinner (casual)", lat: 52.5096, lng: 13.3759, cat: "dining", note: "7:45 PM, after ALIZÉ — casual spot, fine dining closed Sundays" }
-      ]
-    },
-    {
-      id: 5, label: "Mon 19",
-      items: [
-        { name: "studio32 Berlin — Masterclass", short: "studio32", lat: 52.4945096, lng: 13.3537009, cat: "tour", note: "Modern German Cuisine masterclass, 9:30 AM" },
-        { name: "C/O Berlin", short: "C/O Berlin", lat: 52.5066337, lng: 13.330547, cat: "exhibition" },
-        { name: "Berlin Story Bunker", short: "Story Bunker", lat: 52.5031, lng: 13.3811, cat: "exhibition", note: "4:00 PM, booked" },
-        { name: "Clärchens Ballhaus", short: "Clärchens", lat: 52.5267016, lng: 13.3968996, cat: "dining", note: "Dinner, 6:30 PM" },
-        { name: "A-Trane Jazz Club", short: "A-Trane", lat: 52.5072727, lng: 13.3199699, cat: "show", note: "Free entry Monday nights, no booking needed" }
-      ]
-    },
-    {
-      id: 6, label: "Tue 20",
-      items: [
-        { name: "Hamburger Bahnhof", short: "Hamburger Bahnhof", lat: 52.5284, lng: 13.3721, cat: "exhibition", note: "10:00 AM, not booked" },
-        { name: "Liquidrom", short: "Liquidrom", lat: 52.5015803, lng: 13.3811599, cat: "wellness", note: "12:30–2:30 PM, not booked" }
-      ]
-    }
-  ];
-
-  const AREAS = [
-    { name: "Historic Mitte Core", short: "Mitte Core", lat: 52.5150, lng: 13.3830, day: 1, note: "Areas to Explore — best mornings before 10, or evenings through Oct 18" },
-    { name: "Prenzlauer Berg & Mauerpark", short: "Mauerpark", lat: 52.5424, lng: 13.4013, day: 1, note: "Areas to Explore — best Sunday afternoon, but close enough to note here too" },
-    { name: "Scheunenviertel & Auguststraße", short: "Scheunenviertel", lat: 52.5267, lng: 13.3969, day: 2, note: "Areas to Explore — best Tue–Sat afternoon" },
-    { name: "Kreuzberg (Bergmannkiez)", short: "Kreuzberg", lat: 52.4890, lng: 13.3925, day: 3, note: "Areas to Explore — best Thu evening or Sat daytime" },
-    { name: "Charlottenburg & Ku'damm", short: "Ku'damm", lat: 52.5045, lng: 13.3260, day: 3, note: "Areas to Explore — best right after the Palace" },
-    { name: "Potsdamer Platz area", short: "Potsdamer Platz", lat: 52.5096, lng: 13.3759, day: 4, note: "Areas to Explore — best late afternoon" }
-  ];
-
-  const RAINY = [
-    { name: "Deutsches Historisches Museum", short: "DHM (rainy)", lat: 52.5177, lng: 13.3971, day: 1, note: "Bad weather option" },
-    { name: "Mall of Berlin", short: "Mall of Berlin (rainy)", lat: 52.5098, lng: 13.3796, day: 1, note: "Bad weather option" },
-    { name: "DDR Museum", short: "DDR Museum (rainy)", lat: 52.5192, lng: 13.4025, day: 2, note: "Bad weather option" },
-    { name: "Sony Center", short: "Sony Center (rainy)", lat: 52.5096, lng: 13.3759, day: 4, note: "Bad weather option" },
-    { name: "KaDeWe", short: "KaDeWe (rainy)", lat: 52.5019, lng: 13.3389, day: 4, note: "Bad weather option" },
-    { name: "Café Einstein Stammhaus", short: "Café Einstein (rainy)", lat: 52.5064, lng: 13.3505, day: 4, note: "Bad weather option" }
-  ];
-
-  const LUNCH = [
-    { name: "Ishin", short: "Ishin", lat: 52.5180204, lng: 13.3866199, day: 1, note: "Lunch option" },
-    { name: "1687 Restaurant & Café", short: "1687", lat: 52.51813, lng: 13.3842557, day: 1, note: "Lunch option" },
-    { name: "Flamingo Fresh Food Bar", short: "Flamingo", lat: 52.5195664, lng: 13.3855463, day: 1, note: "Lunch option" },
-    { name: "Café am Neuen See", short: "Café am Neuen See", lat: 52.5103772, lng: 13.3444862, day: 1, note: "Lunch option" },
-
-    { name: "Zum Nußbaum", short: "Zum Nußbaum", lat: 52.5171608, lng: 13.4071618, day: 2, note: "Lunch option" },
-    { name: "Georgbräu", short: "Georgbräu", lat: 52.5165548, lng: 13.4055038, day: 2, note: "Lunch option" },
-    { name: "Reinhard's", short: "Reinhard's", lat: 52.5173178, lng: 13.4058675, day: 2, note: "Lunch option" },
-    { name: "Mutter Hoppe", short: "Mutter Hoppe", lat: 52.5177056, lng: 13.4062088, day: 2, note: "Lunch option" },
-
-    { name: "Burgermeister", short: "Burgermeister", lat: 52.501092, lng: 13.4424249, day: 3, note: "Lunch option" },
-    { name: "Curry 36", short: "Curry 36", lat: 52.4934716, lng: 13.3876497, day: 3, note: "Lunch option" },
-    { name: "Mustafa's Gemüse Kebap", short: "Mustafa's", lat: 52.493485, lng: 13.3885619, day: 3, note: "Lunch option" },
-
-    { name: "NENI Berlin", short: "NENI", lat: 52.50572, lng: 13.33776, day: 3, note: "Lunch option" },
-    { name: "Schildkröte", short: "Schildkröte", lat: 52.5018905, lng: 13.3253887, day: 3, note: "Lunch option" },
-    { name: "Paris Bar", short: "Paris Bar", lat: 52.5054309, lng: 13.326345, day: 3, note: "Lunch option" },
-    { name: "Marjellchen", short: "Marjellchen", lat: 52.5031687, lng: 13.3177558, day: 3, note: "Lunch option" },
-
-    { name: "12 Apostel", short: "12 Apostel", lat: 52.5052643, lng: 13.3206953, day: 5, note: "Lunch option" },
-    { name: "Diener Tattersall", short: "Diener Tattersall", lat: 52.5046721, lng: 13.3236397, day: 5, note: "Lunch option" }
-  ];
-
-  const map = L.map('map', { zoomControl: true }).setView([HOTEL.lat, HOTEL.lng], 13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  let markerLayer = L.layerGroup().addTo(map);
-
-  function colorFor(cat) {
-    return getComputedStyle(document.documentElement).getPropertyValue('--' + cat).trim() || '#555';
-  }
-
-  const starIcon = L.divIcon({
-    className: 'star-icon',
-    html: '<svg viewBox="0 0 24 24" width="40.5" height="40.5"><path d="M12 2.5l2.9 6.4 7 .6-5.3 4.6 1.6 6.9L12 17.2 5.8 21l1.6-6.9-5.3-4.6 7-.6z" fill="#d4a017" stroke="#ffffff" stroke-width="1.3" stroke-linejoin="round"/></svg>',
-    iconSize: [40.5, 40.5],
-    iconAnchor: [20.25, 20.25]
-  });
-
-  function makeAreaMarker(area) {
-    const marker = L.marker([area.lat, area.lng], { icon: starIcon });
-    marker.bindTooltip(area.short, { permanent: true, direction: 'right', offset: [21, 0], className: 'map-label' });
-    marker.bindPopup('<div class="popup-name">' + area.name + '</div><div class="popup-note">' + area.note + '</div>');
-    return marker;
-  }
-
-  const rainIcon = L.divIcon({
-    className: 'rain-icon',
-    html: '<div style="font-size:40.5px; line-height:1;">🌧️</div>',
-    iconSize: [40.5, 40.5],
-    iconAnchor: [20.25, 20.25]
-  });
-
-  function makeRainyMarker(item) {
-    const marker = L.marker([item.lat, item.lng], { icon: rainIcon });
-    marker.bindTooltip(item.short, { permanent: true, direction: 'left', offset: [-21, 0], className: 'map-label' });
-    marker.bindPopup('<div class="popup-name">' + item.name + '</div><div class="popup-note">' + item.note + '</div>');
-    return marker;
-  }
-
-  const lunchIcon = L.divIcon({
-    className: 'lunch-icon',
-    html: '<svg viewBox="0 0 24 24" width="34" height="34">' +
-      '<circle cx="12" cy="12" r="6" fill="#ffffff" stroke="#2b1a0f" stroke-width="1.2"/>' +
-      '<g fill="#2b1a0f">' +
-      '<rect x="1.8" y="2" width="0.8" height="6"/>' +
-      '<rect x="3" y="2" width="0.8" height="6"/>' +
-      '<rect x="4.2" y="2" width="0.8" height="6"/>' +
-      '<rect x="1.8" y="7.9" width="3.2" height="0.9"/>' +
-      '<rect x="3" y="8.7" width="0.8" height="13.3"/>' +
-      '<path d="M21.4 2c-1.1 0-1.8 2.2-1.8 5 0 2.2 0.6 3.6 1.4 4V22h0.8V2z"/>' +
-      '</g>' +
-      '</svg>',
-    iconSize: [34, 34],
-    iconAnchor: [17, 17]
-  });
-
-  function makeLunchMarker(item) {
-    const marker = L.marker([item.lat, item.lng], { icon: lunchIcon });
-    marker.bindTooltip(item.short, { permanent: true, direction: 'right', offset: [18, 0], className: 'map-label' });
-    marker.bindPopup('<div class="popup-name">' + item.name + '</div><div class="popup-note">' + item.note + '</div>');
-    return marker;
-  }
-
-  function makeMarker(item, isHotel) {
-    const color = isHotel ? colorFor('hotel') : colorFor(item.cat);
-    const marker = L.circleMarker([item.lat, item.lng], {
-      radius: isHotel ? 8 : 9,
-      color: '#ffffff',
-      weight: 2,
-      fillColor: color,
-      fillOpacity: 0.95
-    });
-    marker.bindTooltip(item.short || item.name, {
-      permanent: true,
-      direction: 'right',
-      offset: [8, 0],
-      className: 'map-label'
-    });
-    const html = '<div class="popup-name">' + item.name + '</div>' +
-      (item.note ? '<div class="popup-note">' + item.note + '</div>' : '');
-    marker.bindPopup(html);
-    return marker;
-  }
-
-  // Andrew's monotone chain convex hull. Points as [lng, lat] (treated as plain x/y for a small local area).
-  function convexHull(points) {
-    const pts = points.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
-    if (pts.length < 3) return pts;
-    const cross = (o, a, b) => (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0]);
-    const lower = [];
-    for (const p of pts) {
-      while (lower.length >= 2 && cross(lower[lower.length-2], lower[lower.length-1], p) <= 0) lower.pop();
-      lower.push(p);
-    }
-    const upper = [];
-    for (let i = pts.length - 1; i >= 0; i--) {
-      const p = pts[i];
-      while (upper.length >= 2 && cross(upper[upper.length-2], upper[upper.length-1], p) <= 0) upper.pop();
-      upper.push(p);
-    }
-    upper.pop(); lower.pop();
-    return lower.concat(upper);
-  }
-
-  function showDay(dayId) {
-    markerLayer.clearLayers();
-    const day = DAYS.find(d => d.id === dayId);
-    if (!day) return;
-
-    const bounds = [];
-    const hullPoints = [];
-
-    bounds.push([HOTEL.lat, HOTEL.lng]);
-    hullPoints.push([HOTEL.lng, HOTEL.lat]);
-
-    day.items.forEach(item => {
-      bounds.push([item.lat, item.lng]);
-      hullPoints.push([item.lng, item.lat]);
-    });
-
-    // Day-colored polygon first, so markers/labels sit on top of it.
-    if (hullPoints.length >= 3) {
-      const hull = convexHull(hullPoints);
-      if (hull.length >= 3) {
-        const latlngs = hull.map(p => [p[1], p[0]]);
-        L.polygon(latlngs, {
-          color: DAY_COLORS[dayId],
-          weight: 1.5,
-          fillColor: DAY_COLORS[dayId],
-          fillOpacity: 0.12,
-          dashArray: '4 4'
-        }).addTo(markerLayer);
-      }
-    }
-
-    markerLayer.addLayer(makeMarker(HOTEL, true));
-    day.items.forEach(item => markerLayer.addLayer(makeMarker(item, false)));
-
-    AREAS.filter(a => a.day === dayId).forEach(area => {
-      markerLayer.addLayer(makeAreaMarker(area));
-      bounds.push([area.lat, area.lng]);
-    });
-
-    RAINY.filter(r => r.day === dayId).forEach(item => {
-      markerLayer.addLayer(makeRainyMarker(item));
-      bounds.push([item.lat, item.lng]);
-    });
-
-    LUNCH.filter(l => l.day === dayId).forEach(item => {
-      markerLayer.addLayer(makeLunchMarker(item));
-      bounds.push([item.lat, item.lng]);
-    });
-
-    if (bounds.length > 1) {
-      map.fitBounds(bounds, { padding: [50, 50] });
-    } else {
-      map.setView(bounds[0], 13);
-    }
-
-    document.querySelectorAll('.tab').forEach(t => {
-      t.classList.toggle('active', parseInt(t.dataset.day) === dayId);
-    });
-  }
-
-  const tabsEl = document.getElementById('tabs');
-  DAYS.forEach(day => {
-    const btn = document.createElement('div');
-    btn.className = 'tab';
-    btn.textContent = day.label;
-    btn.dataset.day = day.id;
-    btn.addEventListener('click', () => showDay(day.id));
-    tabsEl.appendChild(btn);
-  });
-
-  // ---- My location (needs https, e.g. GitHub Pages; does not work from a saved file) ----
-  const locLayer = L.layerGroup().addTo(map);
-  let locWatch = null, locFirstFix = true;
-  const toastEl = document.createElement('div');
-  toastEl.className = 'loc-toast';
-  document.body.appendChild(toastEl);
-  let toastTimer = null;
-  function toast(msg) {
-    toastEl.textContent = msg;
-    toastEl.style.display = 'block';
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { toastEl.style.display = 'none'; }, 5000);
-  }
-
-  function stopLocating(btn) {
-    if (locWatch !== null) navigator.geolocation.clearWatch(locWatch);
-    locWatch = null;
-    locLayer.clearLayers();
-    btn.classList.remove('active');
-  }
-
-  function startLocating(btn) {
-    if (!('geolocation' in navigator)) { toast('This browser does not support location.'); return; }
-    if (!window.isSecureContext) {
-      toast('Location only works when the map is opened from an https link (for example GitHub Pages), not from a saved file.');
-      return;
-    }
-    locFirstFix = true;
-    btn.classList.add('active');
-    locWatch = navigator.geolocation.watchPosition(pos => {
-      const ll = [pos.coords.latitude, pos.coords.longitude];
-      locLayer.clearLayers();
-      L.circle(ll, { radius: pos.coords.accuracy, color: '#2a6fdb', weight: 1, fillColor: '#2a6fdb', fillOpacity: 0.12, interactive: false }).addTo(locLayer);
-      L.circleMarker(ll, { radius: 8, color: '#ffffff', weight: 3, fillColor: '#2a6fdb', fillOpacity: 1 })
-        .bindPopup('<div class="popup-name">You are here</div>').addTo(locLayer);
-      if (locFirstFix) {
-        locFirstFix = false;
-        map.setView(ll, Math.max(map.getZoom(), 15));
-      }
-    }, err => {
-      stopLocating(btn);
-      toast(err.code === 1 ? 'Location permission was denied. Allow it for this site in your browser settings.' : 'Could not get your location.');
-    }, { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 });
-  }
-
-  const LocateControl = L.Control.extend({
-    options: { position: 'topleft' },
-    onAdd: function () {
-      const box = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-      const a = L.DomUtil.create('a', 'locate-btn', box);
-      a.href = '#';
-      a.title = 'Show my location';
-      a.setAttribute('role', 'button');
-      a.setAttribute('aria-label', 'Show my location');
-      a.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>';
-      L.DomEvent.disableClickPropagation(box);
-      L.DomEvent.on(a, 'click', e => {
-        L.DomEvent.preventDefault(e);
-        if (locWatch === null) startLocating(a); else stopLocating(a);
-      });
-      return box;
-    }
-  });
-  map.addControl(new LocateControl());
-
-  showDay(1);
-</script>
-
 </body>
 </html>
